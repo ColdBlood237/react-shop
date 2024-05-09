@@ -47,12 +47,12 @@ export const productsSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.products = action.payload;
-        // remove duplicates
+        // remove duplicates,
         state.products = state.products.filter(
           (value, index, self) =>
             index === self.findIndex((t) => t.name === value.name)
         );
-        console.log(state.products);
+
         state.products[0].price = 400;
         state.products[0].description =
           "Google Pixel 6 Pro 5G Se il dispositivo è caldo. Tuttavia, questo è prevedibile e può essere caldo, soprattutto quando si riproducono video, giochi o altri media.";
@@ -122,7 +122,7 @@ export const productsSlice = createSlice({
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const response = await fetch("https://api.restful-api.dev/objects");
+    const response = await fetch("https://api.restful-api.dev/objects"); // change back later
     const data = await response.json();
     return data;
   }

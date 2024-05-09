@@ -7,13 +7,17 @@ import {
   sortByPriceAscending,
   sortByPriceDescending,
 } from "../redux/productsSlice";
+import { setSelectedCategory } from "../redux/selectedCategorySlice";
 
 export default function Products() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const priceOrder = useSelector((state) => state.priceOrder.priceOrder);
+  const selectedCategory = useSelector(
+    (state) => state.selectedCategory.selectedCategory
+  );
   const [selectedOrder, setSelectedOrder] = useState("dec");
-  const [selectedCategory, setSelectedCategory] = useState("none");
+  // const [selectedCategory, setSelectedCategory] = useState("none");
   const [searchInput, setSearchInput] = useState("");
 
   function handleRadioChange(e) {
@@ -66,7 +70,7 @@ export default function Products() {
       <select
         className="select select-bordered w-full max-w-xs mb-8"
         value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
+        onChange={(e) => dispatch(setSelectedCategory(e.target.value))}
       >
         <option value="none" disabled>
           ---

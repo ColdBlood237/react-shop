@@ -1,4 +1,11 @@
+/* eslint-disable react/prop-types */
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { setSelectedCategory } from "../redux/selectedCategorySlice";
+
 export default function Category({ name, products }) {
+  const dispatch = useDispatch();
+
   return (
     <div className="card w-96 bg-base-100 shadow-xl mb-6">
       <div className="card-body">
@@ -9,7 +16,9 @@ export default function Category({ name, products }) {
           ))}
         </ul>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">See All</button>
+          <Link to="/products" onClick={dispatch(setSelectedCategory(name))}>
+            <button className="btn btn-primary">See All</button>
+          </Link>
         </div>
       </div>
     </div>
