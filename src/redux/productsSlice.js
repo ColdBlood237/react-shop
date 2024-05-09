@@ -8,12 +8,6 @@ export const productsSlice = createSlice({
     error: null,
   },
   reducers: {
-    addPrice: (state, action) => {
-      const index = action.payload[0];
-      const price = action.payload[1];
-      //console.log(state.products);
-      //state.products[index].price = price;
-    },
     sortByPriceAscending: (state) => {
       // Create a shallow copy of the original array
       const newArray = state.products.slice();
@@ -86,7 +80,7 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-export const { addPrice, sortByPriceAscending, sortByPriceDescending } =
+export const { sortByPriceAscending, sortByPriceDescending } =
   productsSlice.actions;
 
 export default productsSlice.reducer;

@@ -12,12 +12,17 @@ export default function Products() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const priceOrder = useSelector((state) => state.priceOrder.priceOrder);
-  const [selectedValue, setSelectedValue] = useState("dec");
+  const [selectedOrder, setSelectedOrder] = useState("dec");
+  const [selectedCategory, setSelectedCategory] = useState("none");
 
   function handleRadioChange(e) {
     console.log(e.target.value);
-    setSelectedValue(e.target.value);
+    setSelectedOrder(e.target.value);
     dispatch(switchPriceOrder());
+  }
+
+  function handleSelectChange(e) {
+    setSelectedCategory(e.target.value);
   }
 
   useEffect(() => {
@@ -42,7 +47,7 @@ export default function Products() {
               name="priceOrder"
               value="dec"
               className="radio checked:bg-red-500"
-              checked={selectedValue === "dec"}
+              checked={selectedOrder === "dec"}
               onChange={handleRadioChange}
             />
           </label>
@@ -55,19 +60,41 @@ export default function Products() {
               name="priceOrder"
               value="inc"
               className="radio checked:bg-blue-500"
-              checked={selectedValue === "inc"}
+              checked={selectedOrder === "inc"}
               onChange={handleRadioChange}
             />
           </label>
         </div>
       </div>
+      <select
+        className="select select-bordered w-full max-w-xs mb-8"
+        value={selectedCategory}
+        onChange={handleSelectChange}
+      >
+        <option value="none" disabled>
+          ---
+        </option>
+        <option value="Google">Google</option>
+        <option value="Apple">Apple</option>
+        <option value="Samsung">Samsung</option>
+        <option value="Beats">Beats</option>
+      </select>
       <ul className="w-1/2 mx-auto">
-        {products.map((product) => (
-          <li key={product.id} className="mb-2 flex justify-between">
-            <span>{product.name}</span>
-            <span>{product.price}€</span>
-          </li>
-        ))}
+        {selectedCategory === "none"
+          ? products.map((product) => (
+              <li key={product.id} className="mb-2 flex justify-between">
+                <span>{product.name}</span>
+                <span>{product.price}€</span>
+              </li>
+            ))
+          : products
+              .filter((product) => product.name.startsWith(selectedCategory))
+              .map((product) => (
+                <li key={product.id} className="mb-2 flex justify-between">
+                  <span>{product.name}</span>
+                  <span>{product.price}€</span>
+                </li>
+              ))}
       </ul>
     </div>
   );

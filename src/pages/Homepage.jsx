@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import Navbar from "../components/Navbar";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { addPrice, fetchProducts } from "../redux/productsSlice";
