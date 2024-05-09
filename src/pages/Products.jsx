@@ -79,23 +79,49 @@ export default function Products() {
         <option value="Samsung">Samsung</option>
         <option value="Beats">Beats</option>
       </select>
-      <ul className="w-1/2 mx-auto">
+      <div className="mx-auto flex flex-wrap justify-around">
         {selectedCategory === "none"
           ? products.map((product) => (
-              <li key={product.id} className="mb-2 flex justify-between">
-                <span>{product.name}</span>
-                <span>{product.price}€</span>
-              </li>
+              <div
+                key={product.id}
+                className="card mb-8 w-96 bg-base-100 shadow-xl"
+              >
+                <figure>
+                  <img className="w-24" src={product.image} alt="Shoes" />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">{product.name}</h2>
+                  <p>{product.description}</p>
+                  <div className="card-actions justify-end">
+                    <button className="btn btn-primary">
+                      {product.price} €
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))
           : products
               .filter((product) => product.name.startsWith(selectedCategory))
               .map((product) => (
-                <li key={product.id} className="mb-2 flex justify-between">
-                  <span>{product.name}</span>
-                  <span>{product.price}€</span>
-                </li>
+                <div
+                  key={product.id}
+                  className="card mb-8 w-96 bg-base-100 shadow-xl"
+                >
+                  <figure>
+                    <img src={product.image} alt="Shoes" />
+                  </figure>
+                  <div className="card-body">
+                    <h2 className="card-title">{product.name}</h2>
+                    <p>{product.description}</p>
+                    <div className="card-actions justify-end">
+                      <button className="btn btn-primary">
+                        {product.price} €
+                      </button>
+                    </div>
+                  </div>
+                </div>
               ))}
-      </ul>
+      </div>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addPrice, fetchProducts } from "../redux/productsSlice";
+import { fetchProducts } from "../redux/productsSlice";
 import { initializeGoogleProducts } from "../redux/googleProductsSlice";
 import { initializeSamsungProducts } from "../redux/samsungProductsSlice";
 import { initializeAppleProducts } from "../redux/appleProductsSlice";
@@ -29,7 +29,6 @@ export default function Homepage() {
   useEffect(() => {
     if (productsStatus === "idle") {
       dispatch(fetchProducts());
-      dispatch(addPrice([0, 33]));
     }
 
     dispatch(initializeGoogleProducts(products));
