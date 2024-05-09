@@ -4,6 +4,7 @@ import googleProductsReducer from "./googleProductsSlice";
 import appleProductsReducer from "./appleProductsSlice";
 import samsungProductsReducer from "./samsungProductsSlice";
 import beatsProductsReducer from "./beatsProductsSlice";
+import priceOrderReducer from "./priceOrderSlice";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     appleProducts: appleProductsReducer,
     samsungProducts: samsungProductsReducer,
     beatsProducts: beatsProductsReducer,
+    priceOrder: priceOrderReducer,
   },
 });

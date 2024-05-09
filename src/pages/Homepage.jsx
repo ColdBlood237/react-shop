@@ -38,10 +38,10 @@ export default function Homepage() {
     dispatch(initializeAppleProducts(products));
     dispatch(initializeBeatsProducts(products));
 
-    console.log(appleProducts);
-    console.log(googleProducts);
-    console.log(samsungProducts);
-    console.log(beatsProducts);
+    // console.log(appleProducts);
+    // console.log(googleProducts);
+    // console.log(samsungProducts);
+    // console.log(beatsProducts);
   }, [productsStatus, dispatch]);
 
   return (

@@ -14,6 +14,36 @@ export const productsSlice = createSlice({
       //console.log(state.products);
       //state.products[index].price = price;
     },
+    sortByPriceAscending: (state) => {
+      // Create a shallow copy of the original array
+      const newArray = state.products.slice();
+      for (let i = 0; i < newArray.length - 1; i++) {
+        for (let j = 0; j < newArray.length - i - 1; j++) {
+          if (newArray[j].price > newArray[j + 1].price) {
+            // Swap the elements
+            let temp = newArray[j];
+            newArray[j] = newArray[j + 1];
+            newArray[j + 1] = temp;
+          }
+        }
+      }
+      state.products = newArray;
+    },
+    sortByPriceDescending: (state) => {
+      // Create a shallow copy of the original array
+      const newArray = state.products.slice();
+      for (let i = 0; i < newArray.length - 1; i++) {
+        for (let j = 0; j < newArray.length - i - 1; j++) {
+          if (newArray[j].price < newArray[j + 1].price) {
+            // Swap the elements
+            let temp = newArray[j];
+            newArray[j] = newArray[j + 1];
+            newArray[j + 1] = temp;
+          }
+        }
+      }
+      state.products = newArray;
+    },
   },
   extraReducers(builder) {
     builder
@@ -28,7 +58,6 @@ export const productsSlice = createSlice({
           (value, index, self) =>
             index === self.findIndex((t) => t.name === value.name)
         );
-        console.log(state.products);
         state.products[0].price = 400;
         state.products[1].price = 450;
         state.products[2].price = 800;
@@ -57,6 +86,7 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-export const { addPrice } = productsSlice.actions;
+export const { addPrice, sortByPriceAscending, sortByPriceDescending } =
+  productsSlice.actions;
 
 export default productsSlice.reducer;
