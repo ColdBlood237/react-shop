@@ -8,6 +8,7 @@ import { initializeGoogleProducts } from "../redux/googleProductsSlice";
 import { initializeSamsungProducts } from "../redux/samsungProductsSlice";
 import { initializeAppleProducts } from "../redux/appleProductsSlice";
 import { initializeBeatsProducts } from "../redux/beatsProductsSlice";
+import Category from "../components/Category";
 
 export default function Homepage() {
   const products = useSelector((state) => state.products.products);
@@ -44,42 +45,16 @@ export default function Homepage() {
   }, [productsStatus, dispatch]);
 
   return (
-    <>
+    <div className="text-center">
       <Navbar />
-      <h1>Home page</h1>
-      <h2>categories: </h2>
-      <div>
-        <h3>google</h3>
-        <ul>
-          {googleProducts.map((product) => (
-            <li key={product.id}>{product.name}</li>
-          ))}
-        </ul>
+      <h1 className="text-3xl font-bold mb-8">Home page</h1>
+      <h2 className="text-2xl mb-6">categories: </h2>
+      <div className="flex flex-wrap justify-around">
+        <Category name="Google" products={googleProducts} />
+        <Category name="Apple" products={appleProducts} />
+        <Category name="Beats" products={beatsProducts} />
+        <Category name="Samsung" products={samsungProducts} />
       </div>
-      <div>
-        <h3>samsung</h3>
-        <ul>
-          {samsungProducts.map((product) => (
-            <li key={product.id}>{product.name}</li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h3>apple</h3>
-        <ul>
-          {appleProducts.map((product) => (
-            <li key={product.id}>{product.name}</li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h3>beats</h3>
-        <ul>
-          {beatsProducts.map((product) => (
-            <li key={product.id}>{product.name}</li>
-          ))}
-        </ul>
-      </div>
-    </>
+    </div>
   );
 }
