@@ -7,7 +7,14 @@ export const productsSlice = createSlice({
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    addPrice: (state, action) => {
+      const index = action.payload[0];
+      const price = action.payload[1];
+      //console.log(state.products);
+      //state.products[index].price = price;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchProducts.pending, (state, action) => {
@@ -15,7 +22,24 @@ export const productsSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.products = state.products.concat(action.payload);
+        state.products = action.payload;
+        // remove duplicates
+        state.products = state.products.filter(
+          (value, index, self) =>
+            index === self.findIndex((t) => t.name === value.name)
+        );
+        console.log(state.products);
+        state.products[0].price = 400;
+        state.products[1].price = 450;
+        state.products[2].price = 800;
+        state.products[3].price = 500;
+        state.products[4].price = 700;
+        state.products[5].price = 100;
+        state.products[6].price = 1500;
+        state.products[7].price = 150;
+        state.products[8].price = 100;
+        state.products[9].price = 300;
+        state.products[10].price = 350;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = "failed";
@@ -32,5 +56,7 @@ export const fetchProducts = createAsyncThunk(
     return data;
   }
 );
+
+export const { addPrice } = productsSlice.actions;
 
 export default productsSlice.reducer;
