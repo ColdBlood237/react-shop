@@ -1,42 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const productsSlice = createSlice({
-  name: "products",
+export const productDetailsSlice = createSlice({
+  name: "productDetails",
   initialState: {
-    products: [],
-    status: "idle",
-    error: null,
+    productDetails: "dec",
   },
   reducers: {
-    sortByPriceAscending: (state) => {
-      // Create a shallow copy of the original array
-      const newArray = state.products.slice();
-      for (let i = 0; i < newArray.length - 1; i++) {
-        for (let j = 0; j < newArray.length - i - 1; j++) {
-          if (newArray[j].price > newArray[j + 1].price) {
-            // Swap the elements
-            let temp = newArray[j];
-            newArray[j] = newArray[j + 1];
-            newArray[j + 1] = temp;
-          }
-        }
-      }
-      state.products = newArray;
-    },
-    sortByPriceDescending: (state) => {
-      // Create a shallow copy of the original array
-      const newArray = state.products.slice();
-      for (let i = 0; i < newArray.length - 1; i++) {
-        for (let j = 0; j < newArray.length - i - 1; j++) {
-          if (newArray[j].price < newArray[j + 1].price) {
-            // Swap the elements
-            let temp = newArray[j];
-            newArray[j] = newArray[j + 1];
-            newArray[j + 1] = temp;
-          }
-        }
-      }
-      state.products = newArray;
+    switchPriceOrder: (state) => {
+      state.productDetails = state.productDetails === "dec" ? "inc" : "dec";
     },
   },
   extraReducers(builder) {
@@ -119,19 +90,6 @@ export const productsSlice = createSlice({
   },
 });
 
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
-  async () => {
-    // const response = await fetch("https://api.restful-api.dev/objects"); // change back later
-    const response = await fetch(
-      "https://663ce76017145c4d8c381f97.mockapi.io/products/products"
-    );
-    const data = await response.json();
-    return data;
-  }
-);
+export const { switchPriceOrder } = productDetailsSlice.actions;
 
-export const { sortByPriceAscending, sortByPriceDescending } =
-  productsSlice.actions;
-
-export default productsSlice.reducer;
+export default productDetailsSlice.reducer;

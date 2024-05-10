@@ -2,9 +2,12 @@
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setSelectedCategory } from "../redux/selectedCategorySlice";
+import { useEffect } from "react";
 
 export default function Category({ name, products }) {
   const dispatch = useDispatch();
+
+  useEffect(() => {});
 
   return (
     <div className="card w-96 bg-base-100 shadow-xl mb-6">
@@ -16,8 +19,13 @@ export default function Category({ name, products }) {
           ))}
         </ul>
         <div className="card-actions justify-end">
-          <Link to="/products" onClick={dispatch(setSelectedCategory(name))}>
-            <button className="btn btn-primary">See All</button>
+          <Link to={`/products`}>
+            <button
+              onClick={() => dispatch(setSelectedCategory(name))}
+              className="btn btn-primary"
+            >
+              See All
+            </button>
           </Link>
         </div>
       </div>

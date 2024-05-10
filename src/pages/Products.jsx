@@ -8,8 +8,10 @@ import {
   sortByPriceDescending,
 } from "../redux/productsSlice";
 import { setSelectedCategory } from "../redux/selectedCategorySlice";
+import { useParams } from "react-router-dom";
 
 export default function Products() {
+  const { categoryParam } = useParams();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const priceOrder = useSelector((state) => state.priceOrder.priceOrder);
@@ -25,6 +27,12 @@ export default function Products() {
     setSelectedOrder(e.target.value);
     dispatch(switchPriceOrder());
   }
+
+  useEffect(() => {
+    if (categoryParam !== "") {
+      setSelectedCategory(categoryParam);
+    }
+  }, []);
 
   useEffect(() => {
     if (priceOrder === "inc") {
@@ -72,9 +80,7 @@ export default function Products() {
         value={selectedCategory}
         onChange={(e) => dispatch(setSelectedCategory(e.target.value))}
       >
-        <option value="none" disabled>
-          ---
-        </option>
+        <option value="none">no filter</option>
         <option value="Google">Google</option>
         <option value="Apple">Apple</option>
         <option value="Samsung">Samsung</option>
