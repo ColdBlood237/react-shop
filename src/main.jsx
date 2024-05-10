@@ -8,6 +8,7 @@ import ProductDetails from "./pages/ProductDetails.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
 import "./styles/index.css";
+import Navbar from "./components/Navbar.jsx";
 
 const router = createBrowserRouter([
   {

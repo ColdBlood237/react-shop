@@ -3,23 +3,18 @@ import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
 import { switchPriceOrder } from "../redux/priceOrderSlice";
 import { useEffect, useState } from "react";
-import {
-  sortByPriceAscending,
-  sortByPriceDescending,
-} from "../redux/productsSlice";
+import { sortByPriceAscending, sortByPriceDescending } from "../redux/productsSlice";
 import { setSelectedCategory } from "../redux/selectedCategorySlice";
 import { useParams } from "react-router-dom";
+import ProductCard from "./ProductCard";
 
 export default function Products() {
   const { categoryParam } = useParams();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const priceOrder = useSelector((state) => state.priceOrder.priceOrder);
-  const selectedCategory = useSelector(
-    (state) => state.selectedCategory.selectedCategory
-  );
+  const selectedCategory = useSelector((state) => state.selectedCategory.selectedCategory);
   const [selectedOrder, setSelectedOrder] = useState("dec");
-  // const [selectedCategory, setSelectedCategory] = useState("none");
   const [searchInput, setSearchInput] = useState("");
 
   function handleRadioChange(e) {
@@ -27,6 +22,10 @@ export default function Products() {
     setSelectedOrder(e.target.value);
     dispatch(switchPriceOrder());
   }
+
+  useEffect(() => {
+    console.log(products);
+  });
 
   useEffect(() => {
     if (categoryParam !== "") {
@@ -94,12 +93,7 @@ export default function Products() {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 16 16"
-          fill="currentColor"
-          className="w-4 h-4 opacity-70"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70">
           <path
             fillRule="evenodd"
             d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
@@ -110,56 +104,12 @@ export default function Products() {
       <div className="mx-auto flex flex-wrap justify-around">
         {selectedCategory === "none"
           ? products
-              .filter((product) =>
-                product.name
-                  .toLowerCase()
-                  .includes(searchInput.toLowerCase().trim())
-              )
-              .map((product) => (
-                <div
-                  key={product.id}
-                  className="card mb-8 w-96 bg-base-100 shadow-xl"
-                >
-                  <figure>
-                    <img className="w-24" src={product.image} alt="Shoes" />
-                  </figure>
-                  <div className="card-body">
-                    <h2 className="card-title">{product.name}</h2>
-                    <p>{product.description}</p>
-                    <div className="card-actions justify-end">
-                      <button className="btn btn-primary">
-                        {product.price} €
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
+              .filter((product) => product.name.toLowerCase().includes(searchInput.toLowerCase().trim()))
+              .map((product, index) => <ProductCard key={product.id} id={product.id} />)
           : products
               .filter((product) => product.name.startsWith(selectedCategory))
-              .filter((product) =>
-                product.name
-                  .toLowerCase()
-                  .includes(searchInput.toLowerCase().trim())
-              )
-              .map((product) => (
-                <div
-                  key={product.id}
-                  className="card mb-8 w-96 bg-base-100 shadow-xl"
-                >
-                  <figure>
-                    <img className="w-24" src={product.image} alt="Shoes" />
-                  </figure>
-                  <div className="card-body">
-                    <h2 className="card-title">{product.name}</h2>
-                    <p>{product.description}</p>
-                    <div className="card-actions justify-end">
-                      <button className="btn btn-primary">
-                        {product.price} €
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              .filter((product) => product.name.toLowerCase().includes(searchInput.toLowerCase().trim()))
+              .map((product, index) => <ProductCard key={product.id} id={product.id} />)}
       </div>
     </div>
   );
