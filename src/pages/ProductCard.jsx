@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setProductDetails } from "../redux/productDetailsSlice";
+import { setProductId } from "../redux/productIdSlice";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -19,7 +19,7 @@ export default function ProductCard({ id }) {
         <p>{currentProduct.description}</p>
         <div className="card-actions justify-end">
           <Link to={`/products/${currentProduct.id}`}>
-            <button onClick={() => dispatch(setProductDetails(currentProduct))} className="btn btn-secondary">
+            <button onClick={() => dispatch(setProductId(id))} className="btn btn-secondary">
               see details
             </button>
           </Link>

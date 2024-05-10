@@ -6,7 +6,7 @@ import samsungProductsReducer from "./samsungProductsSlice";
 import beatsProductsReducer from "./beatsProductsSlice";
 import priceOrderReducer from "./priceOrderSlice";
 import selectedCategoryReducer from "./selectedCategorySlice";
-import productDetailsReducer from "./productDetailsSlice";
+import productIdReducer from "./productIdSlice";
 
 export default configureStore({
   reducer: {
@@ -17,6 +17,6 @@ export default configureStore({
     beatsProducts: beatsProductsReducer,
     priceOrder: priceOrderReducer,
     selectedCategory: selectedCategoryReducer,
-    productDetails: productDetailsReducer,
+    productId: productIdReducer,
   },
 });

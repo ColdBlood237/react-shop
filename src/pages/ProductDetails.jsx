@@ -4,39 +4,38 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
 import { modifyOneProduct } from "../redux/productsSlice";
-import { setProductDetails } from "../redux/productDetailsSlice";
 
 export default function ProductDetails() {
   const dispatch = useDispatch();
-  const productDetails = useSelector((state) => state.productDetails.productDetails);
+  const productId = useSelector((state) => state.productId.productId);
   const products = useSelector((state) => state.products.products);
+  const [currentProduct, setCurrentProduct] = useState(
+    products[products.findIndex((product) => product.id === productId)]
+  );
   const [editMode, setEditMode] = useState(false);
-  const [nameInput, setNameInput] = useState(productDetails.name);
-  const [imgInput, setImgInput] = useState(productDetails.image);
-  const [priceInput, setPriceInput] = useState(productDetails.price);
-  const [descriptionInput, setDescriptionInput] = useState(productDetails.description);
+  const [nameInput, setNameInput] = useState(currentProduct.name);
+  const [imgInput, setImgInput] = useState(currentProduct.image);
+  const [priceInput, setPriceInput] = useState(currentProduct.price);
+  const [descriptionInput, setDescriptionInput] = useState(currentProduct.description);
 
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(
-      setProductDetails({
-        id: productDetails.id,
-        name: nameInput,
-        image: imgInput,
-        price: priceInput,
-        description: descriptionInput,
-      })
-    );
-    dispatch(
       modifyOneProduct({
-        id: productDetails.id,
+        id: currentProduct.id,
         name: nameInput,
         image: imgInput,
         price: priceInput,
         description: descriptionInput,
       })
     );
-
+    setCurrentProduct({
+      id: currentProduct.id,
+      name: nameInput,
+      image: imgInput,
+      price: priceInput,
+      description: descriptionInput,
+    });
     setEditMode(false);
   }
 
@@ -98,10 +97,10 @@ export default function ProductDetails() {
         </form>
       ) : (
         <div className="flex flex-col mx-auto gap-8 w-96">
-          <h1 className="text-3xl">{productDetails.name}</h1>
-          <img className="w-96" src={productDetails.image} alt={productDetails.name} />
-          <p className="text-2xl">{productDetails.price} €</p>
-          <p>{productDetails.description}</p>
+          <h1 className="text-3xl">{currentProduct.name}</h1>
+          <img className="w-96" src={currentProduct.image} alt={currentProduct.name} />
+          <p className="text-2xl">{currentProduct.price} €</p>
+          <p>{currentProduct.description}</p>
           <button onClick={() => setEditMode(true)} className="btn">
             edit
           </button>
